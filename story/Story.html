@@ -1,0 +1,123 @@
+<html>
+  <head>
+    <title>Advanced Marker Accessibility</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+    <!-- playground-hide -->
+    <script>
+      const process = { env: {} };
+      process.env.GOOGLE_MAPS_API_KEY =
+        "AIzaSyDv3MGflguusDaLmV_-BUlmuoUI4EbM88w";
+    </script>
+    <!-- playground-hide-end -->
+
+    <link rel="stylesheet" type="text/css" href="./style.css" />
+    <script type="module" src="./index.js"></script>
+	
+	
+/* 
+ * Always set the map height explicitly to define the size of the div element
+ * that contains the map. 
+ */
+#map {
+  height: 100%;
+}
+
+/* 
+ * Optional: Makes the sample page fill the window. 
+ */
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+[class$=api-load-alpha-banner] {
+  display: none;
+}
+
+  </head>
+  <body>
+  
+  
+function initMap() {
+  const map = new google.maps.Map(
+    document.getElementById("map") as HTMLElement,
+    {
+      zoom: 7,
+      center: { lat: 48.149, lng: -80.031 },
+      mapId: "4504f8b37365c3d0",
+    }
+  );
+
+  // Set LatLng and title text for the markers. The first marker (Boynton Pass)
+  // receives the initial focus when tab is pressed. Use arrow keys to
+  // move between markers; press tab again to cycle through the map controls.
+  const tourStops = [
+    {
+      position: { lat: 47.8011908, lng: -79.87924005 },
+      title: "Kap-Kig-iwan",
+    },
+    {
+      position: { lat: 48.572301, lng: -80.891863 },
+      title: "Kettle Lakes",
+    },
+    {
+      position: { lat: 48.281932, lng: -79.872539 },
+      title: "Esker Lakes",
+    },
+    {
+      position: { lat: 48.152309, lng: -82.513872 },
+      title: "Ivanhoe Lake",
+    },
+  ];
+
+  // Create an info window to share between markers.
+  const infoWindow = new google.maps.InfoWindow();
+
+  // Create the markers.
+  tourStops.forEach(({ position, title }, i) => {
+    const pinView = new google.maps.marker.PinView({
+      glyph: `${i + 1}`,
+    });
+
+    const marker = new google.maps.marker.AdvancedMarkerView({
+      position,
+      map,
+      title: `${i + 1}. ${title}`,
+      content: pinView.element,
+    });
+
+    // Add a click listener for each marker, and set up the info window.
+    marker.addListener("click", ({ domEvent, latLng }) => {
+      const { target } = domEvent;
+      infoWindow.close();
+      infoWindow.setContent(marker.title);
+      infoWindow.open(marker.map, marker);
+    });
+  });
+}
+
+declare global {
+  interface Window {
+    initMap: () => void;
+  }
+}
+
+window.initMap = initMap;
+export {};
+
+    <div id="map"></div>
+
+    <!-- 
+      The `defer` attribute causes the callback to execute after the full HTML
+      document has been parsed. For non-blocking uses, avoiding race conditions,
+      and consistent behavior across browsers, consider loading using Promises
+      with https://www.npmjs.com/package/@googlemaps/js-api-loader.
+      -->
+    <script
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg&callback=initMap&libraries=marker&v=beta"
+      defer
+    ></script>
+  </body>
+</html>
