@@ -1,0 +1,138 @@
+<html>
+  <head>
+    <title>Kap-Kig-iwan</title>
+    <style>
+#map {
+	margin: 10px;
+  height: 80%;
+  width: 85%;
+}
+h1 {
+	margin: 20px;
+	font-family: Arial;
+  font-size: 50pt;
+  color: #51443D;
+}
+p {
+  width:85%;
+	margin: 20px;
+	font-family: Arial;
+  font-size: 15pt;
+  color: #51443D;
+}
+
+body{
+  background-color: #52BE80;
+}
+    </style>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+    <script type="module" src="./index.js"></script>
+</head>
+<body>
+  <h1> Kap-Kig-iwan Provincial Park </h1>
+ 
+    <div id="map"></div>
+
+<script>
+let map;
+
+function initMap() {
+  map = new google.maps.Map(document.getElementById("map"), {
+    center: new google.maps.LatLng(47.7963, -79.8835157),
+    zoom: 16,
+  });
+
+  const iconBase =
+    "http://maps.google.com/mapfiles/kml/shapes/";
+  const icons = {
+    water: {
+      icon: iconBase + "water.png",
+    },
+    hiker: {
+      icon: iconBase + "hiker.png",
+    },
+    campground: {
+      icon: iconBase + "campground.png",
+    },
+    comfortstn: {
+      icon: iconBase + "toilets.png",
+    },
+    lookout: {
+      icon: iconBase + "arrow.png",
+    },
+    fishing: {
+      icon: iconBase + "fishing.png",
+    },
+    fire: {
+      icon: iconBase + "firedept.png",
+    },
+  };
+  const features = [
+    {
+      position: new google.maps.LatLng(47.7981823, -79.8904838),
+      type: "hiker",
+    },
+    {
+      position: new google.maps.LatLng(47.796, -79.8910422),
+      type: "water",
+    },
+    {
+      position: new google.maps.LatLng(47.7956, -79.8866),
+      type: "water",
+    },
+    {
+      position: new google.maps.LatLng(47.7934, -79.88186),
+      type: "campground",
+    },
+    {
+      position: new google.maps.LatLng(47.8001, -79.884),
+      type: "campground",
+    },
+    {
+      position: new google.maps.LatLng(47.79963, -79.88099),
+      type: "comfortstn",
+    },
+    {
+      position: new google.maps.LatLng(47.7922, -79.8733),
+      type: "fishing",
+    },
+    {
+      position: new google.maps.LatLng(47.7944, -79.8793),
+      type: "lookout",
+    },
+    {
+      position: new google.maps.LatLng(47.7969, -79.8863),
+      type: "lookout",
+    },
+    {
+      position: new google.maps.LatLng(47.7978,  -79.88163),
+      type: "lookout",
+    },
+    {
+      position: new google.maps.LatLng(47.7954,  -79.8897),
+      type: "fire",
+    },
+  ];
+
+  // Create markers.
+  for (let i = 0; i < features.length; i++) {
+    const marker = new google.maps.Marker({
+      position: features[i].position,
+      icon: icons[features[i].type].icon,
+      map: map,
+    });
+  }
+}
+
+window.initMap = initMap;
+</script>
+
+<script
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDv3MGflguusDaLmV_-BUlmuoUI4EbM88w&callback=initMap&v=weekly"
+      defer
+    ></script>
+<p> Located minutes outside of Englehart Ontario,<a href="https://search.google.com/local/writereview?placeid=ChIJ0yD-TmMlJE0Rz8j1UJuHd-Q"target="_blank">Kap-Kig-iwan Provincial Park</a> is a hidden northern gem. Come to see the rushing waterfalls along the Englehart river from lookouts atop the 80m drop to the river valley below. Stay the night in one of two camping areas, or visit for the day and make use of the day use fire pit, prime fishing locations and much more!
+</p>
+<img src="legend.jpg" alt="MapLegend">
+  </body>
+</html>
